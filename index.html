@@ -114,6 +114,8 @@ section.alt{background:var(--bg-l)}
 .board li{border-bottom:1px solid var(--line)}
 .board a{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 4px}
 .board a:hover .ttl{color:var(--navy);text-decoration:underline}
+.board.simple a{grid-template-columns:56px 1fr}
+.no{font-size:15px;color:var(--t3);text-align:center;font-variant-numeric:tabular-nums}
 .cat{font-size:13px;font-weight:700;padding:2px 10px;border-radius:4px;background:var(--bg-l);color:var(--navy);white-space:nowrap}
 .cat.red{background:#FCEBE9;color:var(--red)}
 .cat.green{background:#EDF6E4;color:#3F7D17}
@@ -266,7 +268,9 @@ footer.site{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:14p
   .partners{grid-template-columns:repeat(2,1fr)}
   .road{grid-template-columns:1fr 1fr}
   .board a{grid-template-columns:1fr;gap:4px}
+  .board.simple a{grid-template-columns:40px 1fr;gap:12px}
   .board .cat{justify-self:start}
+  .board.simple .no{text-align:left}
   .ttl{white-space:normal}
   .pbanner h1{font-size:28px}
   .foot{grid-template-columns:1fr;gap:24px}
@@ -329,7 +333,7 @@ const SITE=[
  {id:"curriculum",name:"교육과정",subs:[["system","과정 체계"],["basic","초급 몰입형 과정"],["mid","중급 몰입형 과정"],["adv","고급 몰입형 과정"],["benefits","이수 후 지원혜택"]]},
  {id:"apply",name:"교육신청",subs:[["apply","교육신청 안내"]]},
  {id:"partners",name:"협력기관",subs:[["list","협력기관"],["join","참여기관 신청"]]},
- {id:"community",name:"커뮤니티",subs:[["notice","공지사항"],["jobs","채용정보"],["qa","Q&A"],["faq","FAQ"]]},
+ {id:"community",name:"커뮤니티",subs:[["notice","공지사항"],["board","게시판"],["jobs","채용정보"],["qa","Q&A"],["faq","FAQ"]]},
  {id:"outcomes",name:"성과관리",subs:[["activities","활동내역"],["news","뉴스·보도자료"],["global","글로벌 캠프"]]},
 ];
 const S='<span class="sample">예시</span>';
@@ -340,6 +344,7 @@ const NOTICES=[
  ["채용","협력기업 인턴십 연계 채용 공고 (15개사)","2026.08.28",""],
  ["행사","AI 리터러시 특강 및 기업 멘토링 데이 개최","2026.08.20",""],
 ];
+const POSTS=["테스트1","테스트2"];
 const PARTNERS=[
  ["Upstage","업스테이지","AI 모델·교육 협력"],
  ["MegazoneCloud","메가존클라우드","클라우드·실습 인프라"],
@@ -545,6 +550,7 @@ const PAGES={
  },
  community:{
   notice:()=>`<div class="search"><input id="nsearch" type="search" placeholder="제목 검색" aria-label="공지 제목 검색"></div>${board(NOTICES)}`,
+  board:()=>`<ul class="board simple">${POSTS.map((t,i)=>`<li><a href="#/community/board"><span class="no">${POSTS.length-i}</span><span class="ttl">${esc(t)}</span></a></li>`).join("")}</ul>`,
   jobs:()=>`<div class="tbl-wrap"><table><thead><tr><th>기업</th><th>공고</th><th>형태</th><th>마감</th></tr></thead><tbody>
    ${[["메가존클라우드","클라우드 운영 인턴","인턴십","2026.10.10"],["에이비티 제주","데이터 분석 보조","인턴십","2026.10.17"],["나임네트웍스","AI 서비스 개발","채용연계형","2026.10.31"]].map(r=>`<tr><td>${r[0]}</td><td>${r[1]} ${S}</td><td><span class="cat">${r[2]}</span></td><td class="num">${r[3]}</td></tr>`).join("")}</tbody></table></div>`,
   qa:()=>`<div style="display:flex;justify-content:flex-end;margin-bottom:16px"><button class="btn btn-primary" onclick="toast('질문 작성 화면으로 이동합니다. (시안)')">질문하기</button></div>
